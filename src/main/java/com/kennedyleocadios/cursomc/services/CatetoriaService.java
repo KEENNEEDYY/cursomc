@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kennedyleocadios.cursomc.domain.Categoria;
 import com.kennedyleocadios.cursomc.repositories.CategoriaRepository;
+import com.kennedyleocadios.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CatetoriaService {
@@ -16,7 +17,8 @@ public class CatetoriaService {
 	
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: "+id+", Tipo: " + Categoria.class.getName()));
 	}
 
 }
